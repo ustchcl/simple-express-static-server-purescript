@@ -12,11 +12,13 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "arrays"
+  [ "aff"
+  , "arrays"
   , "console"
   , "effect"
   , "express"
   , "integers"
+  , "lists"
   , "maybe"
   , "node-fs"
   , "node-http"
@@ -24,6 +26,7 @@ to generate this file without the comments in this block.
   , "node-process"
   , "prelude"
   , "psci-support"
+  , "refs"
   , "transformers"
   ]
 , packages = ./packages.dhall
