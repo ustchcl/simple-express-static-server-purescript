@@ -1,15 +1,17 @@
 module HtmlTemplate where
 
-import Prelude
 import Data.List
-import Data.Array 
+import Prelude
+import Data.Tuple
+
+import Data.Array.NonEmpty as NA
 
 -- 1. Layout
 --   -> class style
 -- 2. HtmlTag
 
 arrayToList :: forall a. Array a -> List a
-arrayToList = ?whatGoesHere
+arrayToList = NA.fromFoldable
 
 data Attribute = Attribute String String
 instance showAttribute :: Show Attribute where 
@@ -65,12 +67,27 @@ data LayoutPrime
   | Style String
   | Attr String String
 
-div :: Array LayoutPrime -> Array MyElm -> MyElem
-div = Div Layout {
+div :: Array LayoutPrime -> Array MyElem -> MyElem
+div layouts children = Div Layout {
   className: className,
   style: style,
   attrs: attrs
-} Array.toL
+} (NA.fromFoldable children)
+  where 
+    show' (ClassName cn) = Tuple 1 cn
+    show' (Style s) = Tuple 2 s
+    show' (Attr )
+    isClassName (ClassName _) = true
+    isClassName _ = false
+
+    isStyle (Style _) = true
+    isStyle _ = false
+
+    isAttr (Attr _ _) = true
+    isAttr _ = false 
+
+    className = 
+       . (filter isClass)
 
 test1 :: String
 test1 = render testParent
